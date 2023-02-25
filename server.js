@@ -1,27 +1,32 @@
+// DEPENDENCIES
 const express = require('express')
+const methodOverride = require('method-override')
+
+// CONFIGURATION
 require('dotenv').config()
-const PORT  = process.env.PORT
+const PORT = process.env.PORT
 const app = express()
 
 // MIDDLEWARE
 app.set('views', __dirname + '/views')
 app.set('view engine', 'jsx')
 app.engine('jsx', require('express-react-views').createEngine())
+app.use(express.urlencoded({extended: true}))
 app.use(express.static('public'))
-app.use(express.urlencoded({extended:true}))
+app.use(methodOverride('_method'))
 
-// Routes
+// ROUTES
 app.get('/', (req, res) => {
-    res.send("<h1>Welcome to an awesome app about breads</h1>")
+  res.send('<h1>Welcome to an Awesome App about Breads!</h1>')
 })
-
-app.get('*', (req, res)=> {
-    res.send("404")
-})
-
+  
 // Breads
-const breadController = require('./controllers/breads_controller.js')
-app.use('/breads', breadController)
+const breadsController = require('./controllers/breads_controller.js')
+app.use('/breads', breadsController)
+
+app.get('*', (req, res) => {
+    res.send('<h1>404 NOT FOUND</h1>')
+})
 
 app.listen(PORT, () => {
     console.log("i am alive")
