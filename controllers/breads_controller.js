@@ -2,6 +2,7 @@ const express = require('express')
 const breads = express.Router()
 const Bread = require('../models/breads.js')
 const seedData = require('./seedData')
+const Baker = require('../models/baker')
 
 
 
@@ -19,7 +20,12 @@ breads.get('/', (req, res) => {
 
 // NEW
 breads.get('/new', (req, res) => {
-  res.render('new')
+  Baker.find()
+    .then(foundBakers => {
+      res.render('new', {
+        bakers: foundBakers
+      })
+    })
 })
 
 // EDIT

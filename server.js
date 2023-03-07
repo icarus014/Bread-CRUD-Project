@@ -30,13 +30,19 @@ app.get('/', (req, res) => {
   res.send('<h1>Welcome to an Awesome App about Breads!</h1>')
 })
   
-// Breads
+// breads
 const breadsController = require('./controllers/breads_controller.js')
 app.use('/breads', breadsController)
 
+// bakers 
+const bakersController = require('./controllers/bakers_controller.js')
+app.use('/bakers', bakersController)
+
+// 404 Page
 app.get('*', (req, res) => {
-    res.send('<h1>404 NOT FOUND</h1>')
+  res.send('404')
 })
+
 
 app.listen(PORT, () => {
     console.log("i am alive")
